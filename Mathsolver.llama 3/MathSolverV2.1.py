@@ -9,8 +9,8 @@ def handle_upload(file):
     global uploaded_image_path
     if file:
         uploaded_image_path = file
-        return "📷 Image uploaded!"
-    return "❌ Upload failed."
+        return "Image uploaded!"
+    return "Upload failed."
 
 def query_llava(user_msg, history):
     global uploaded_image_path
@@ -25,7 +25,7 @@ def query_llava(user_msg, history):
 
     prompt = user_msg.strip()
     if not prompt and not images:
-        return "❗ Please enter a math question or upload an image."
+        return "Please enter a math question or upload an image."
 
     payload = {
         "model": "llava-llama3",
@@ -42,7 +42,7 @@ def query_llava(user_msg, history):
         uploaded_image_path = None
         return data.get("response", "No response from model.")
     except Exception as e:
-        return f"🚫 Error: {e}"
+        return f"Error: {e}"
 
 # Custom CSS
 custom_css = """
@@ -72,7 +72,7 @@ custom_css = """
 """
 
 with gr.Blocks(css=custom_css) as app:
-    gr.Markdown("AI-Powered Math Solver")
+    gr.Markdown("AI-Powered Math Solver V2.0")
     
     chatbot = gr.Chatbot()
     state = gr.State([])
