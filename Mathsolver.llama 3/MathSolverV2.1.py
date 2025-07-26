@@ -55,8 +55,11 @@ custom_css = """
 }
 #upload-icon label {
     cursor: pointer;
-    font-size: 22px;
+    font-size: 28px;
+    font-weight: bold;
     margin-left: 10px;
+    user-select: none;
+    color: #614cad; /* tan green color */
 }
 #custom-chat-input {
     display: flex;
@@ -69,10 +72,28 @@ custom_css = """
     color: #888;
     font-style: italic;
 }
+/* Remove inner border and outline of textbox */
+input[type="text"], textarea {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+.gradio-button {
+    background-color: #88b04b !important;
+    color: white !important;
+    border: none !important;
+}
+
+#custom-submit-btn {
+    background-color: #614cad !important;
+    color: white !important;
+    border: none !important;
+}
+
 """
 
 with gr.Blocks(css=custom_css) as app:
-    gr.Markdown("AI-Powered Math Solver V2.0")
+    gr.Markdown("<h1 style='text-align: center; font-size: 30px;'>AI-Powered Math Solver V2.1</h1>")
     
     chatbot = gr.Chatbot()
     state = gr.State([])
@@ -84,11 +105,11 @@ with gr.Blocks(css=custom_css) as app:
 
         gr.HTML("""
             <div id="upload-icon">
-                <label for="camera-upload">📷</label>
-                <input id="camera-upload" type="file" accept="image/*" />
+                <label for="plus-upload">+</label>
+                <input id="plus-upload" type="file" accept="image/*" />
             </div>
             <script>
-                const input = document.getElementById('camera-upload');
+                const input = document.getElementById('plus-upload');
                 input.addEventListener('change', function() {
                     if (input.files.length > 0) {
                         gradioApp().querySelector('input[type=file]').files = input.files;
@@ -98,7 +119,7 @@ with gr.Blocks(css=custom_css) as app:
             </script>
         """)
 
-    submit_btn = gr.Button("Submit")
+    submit_btn = gr.Button("Submit", elem_id="custom-submit-btn")
     
     def handle_submit(message, history):
         response = query_llava(message, history)
